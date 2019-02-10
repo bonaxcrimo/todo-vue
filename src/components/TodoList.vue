@@ -29,6 +29,15 @@
       </div>
       <div class="remove-item" @click="removeTodo(index)">&times;</div>
     </div>
+
+    <div class="extra-container">
+      <div>
+        <label>
+          <input type="checkbox" :checked="!anyRemaining">Check All
+        </label>
+      </div>
+      <div>{{remaining}} items left</div>
+    </div>
   </div>
 </template>
 
@@ -61,6 +70,14 @@ export default {
       inserted: function(el) {
         el.focus();
       }
+    }
+  },
+  computed: {
+    remaining() {
+      return this.todos.filter(todo => !todo.completed).length;
+    },
+    anyRemaining() {
+      return this.remaining != 0;
     }
   },
   methods: {
@@ -147,5 +164,28 @@ export default {
 .completed {
   text-decoration: line-through;
   color: grey;
+}
+.extra-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  border-top: 1px solid lightgrey;
+  padding-top: 14px;
+  margin-bottom: 14px;
+}
+button {
+  font-size: 14px;
+  background: white;
+  appearance: none;
+  &:hover {
+    background: lightgreen;
+  }
+  &:focus {
+    outline: none;
+  }
+}
+.active {
+  background: lightgreen;
 }
 </style>
